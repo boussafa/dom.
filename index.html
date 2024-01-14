@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        .cart-item {
+            border-bottom: 2px solid #ccc;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .heart {
+            cursor: pointer;
+        }
+
+        .total {
+            margin-top: 30px;
+            font-size: 28px;
+        }
+        
+
+        
+    </style>
+</head>
+<body>
+    <img src='caption.jpg'width="200" height="200"   >
+    <h1  >  bi3 wi echri</h1>
+<div id="shopping-cart">
+   
+    <div class="cart-item" data-id="1">
+        <img src=chaussures-sport-course_1203-3414.jpg width="150" height="150" >
+        <span>chaussures sport (1)</span>
+        <div>
+            <button class="quantity-btn" data-action="decrease">-</button>
+            <span class="quantity">0</span>
+            <button class="quantity-btn" data-action="increase">+</button>
+        </div>
+        <button class="heart" onclick="toggleLike(this)">❤️</button>
+        <button onclick="removeItem(this)">Remove</button>
+        <span class="price">$10.00</span>
+    </div>
+
+    <div class="cart-item" data-id="2">
+        <span><img src=chaussures-fond-blanc_192247-142.avif width="150" height="150" >chaussures sport (2)</span>
+        <div>
+            <button class="quantity-btn" data-action="decrease">-</button>
+            <span class="quantity">0</span>
+            <button class="quantity-btn" data-action="increase">+</button>
+        </div>
+        <button class="heart" onclick="toggleLike(this)">❤️</button>
+        <button onclick="removeItem(this)">Remove</button>
+        <span class="price">$15.00</span>
+    </div>
+
+    <div class="cart-item" data-id="2">
+        <span><img src=chaussures-bappp1203-7528.avif width="150" height="150" >chaussures sport (3)</span>
+        <div>
+            <button class="quantity-btn" data-action="decrease">-</button>
+            <span class="quantity">0</span>
+            <button class="quantity-btn" data-action="increase">+</button>
+        </div>
+        <button class="heart" onclick="toggleLike(this)">❤️</button>
+        <button onclick="removeItem(this)">Remove</button>
+        <span class="price">$20.00</span>
+    </div>
+</div>
+
+<div class="total">
+    Total: $<span id="total-price">00.00</span>
+</div>
+
+<script>
+    function toggleLike(button) {
+        button.classList.toggle("liked");
+    }
+
+    function removeItem(button) {
+        var item = button.parentNode;
+        item.parentNode.removeChild(item);
+        updateTotal();
+    }
+
+    function updateTotal() {
+        var totalPrice = 0;
+        var items = document.querySelectorAll(".cart-item");
+
+        items.forEach(function (item) {
+            var quantity = parseInt(item.querySelector(".quantity").innerText);
+            var price = parseFloat(item.querySelector(".price").innerText.substring(1));
+            totalPrice += quantity * price;
+        });
+
+        document.getElementById("total-price").innerText = totalPrice.toFixed(2);
+    }
+
+    document.querySelectorAll(".quantity-btn").forEach(function (button) {
+        button.addEventListener("click", function () {
+            var action = this.getAttribute("data-action");
+            var quantityElement = this.parentNode.querySelector(".quantity");
+            var quantity = parseInt(quantityElement.innerText);
+
+            if (action === "increase") {
+                quantity++;
+            } else if (action === "decrease" && quantity > 1) {
+                quantity--;
+            }
+
+            quantityElement.innerText = quantity;
+            updateTotal();
+        });
+    });
+</script>
+
+</body>
+</html>
